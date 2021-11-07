@@ -49,7 +49,7 @@ def run_ex1():
     plotting_tasks.put("SCATTER")
     plotting_tasks.put(data)  # add data to the plotting queue
     # creating processes
-    p1 = Process(target=do_job, args=(plotting_tasks, tasks_that_are_done, 1))
+    p1 = Process(target=plot_data, args=(plotting_tasks, tasks_that_are_done, 1))
     processes.append(p1)  # add new process to the processes list
     p1.start()  # start the new process
     input("Press Enter to plot train dataset.")
@@ -93,7 +93,7 @@ def run_ex1():
     plotting_tasks.put(y)  # add y to the plotting queue
     plotting_tasks.put(theta)  # add theta to the plotting queue
     # creating new process
-    p2 = Process(target=do_job, args=(plotting_tasks, tasks_that_are_done, 2))
+    p2 = Process(target=plot_data, args=(plotting_tasks, tasks_that_are_done, 2))
     processes.append(p2)  # add new process to the processes list
     p2.start()  # start the new process
 
@@ -131,11 +131,25 @@ def run_ex1():
     plotting_tasks.put(theta1_values)  # add Theta 1  to the plotting queue
     plotting_tasks.put(J_values)  # add J values to the plotting queue
     # creating new process
-    p3 = Process(target=do_job, args=(plotting_tasks, tasks_that_are_done, 3))
+    p3 = Process(target=plot_data, args=(plotting_tasks, tasks_that_are_done, 3))
     processes.append(p3)  # add new process to the processes list
     p3.start()  # start the new process
 
-    input("Press Enter to plot cost function.")
+    input("Press Enter to plot the Cost Function J as a surface.")
+
+    # plot the Cost Function J contour
+    plotting_tasks.put("CONTOUR")
+    plotting_tasks.put(theta0_values)  # add Theta0_values to the plotting queue
+    plotting_tasks.put(theta1_values)  # add Theta1_values  to the plotting queue
+    plotting_tasks.put(J_values)  # add J values to the plotting queue
+    plotting_tasks.put(theta[0])  # add Theta0  to the plotting queue
+    plotting_tasks.put(theta[1])  # add Theta1  to the plotting queue
+    # creating new process
+    p4 = Process(target=plot_data, args=(plotting_tasks, tasks_that_are_done, 4))
+    processes.append(p4)  # add new process to the processes list
+    p4.start()  # start the new process
+
+    input("Press Enter to plot the Cost Function J as contour.")
 
 
 
