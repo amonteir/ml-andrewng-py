@@ -1,13 +1,12 @@
-import pandas as pd
-import numpy as np
-from ex1.compute_cost import compute_cost
-
 """
 Performs gradient descent to learn theta
    theta = gradient_descent(X, y, theta, alpha, num_iters) updates theta by
    taking num_iters gradient steps with learning rate alpha
 
 """
+import pandas as pd
+import numpy as np
+from ex1.compute_cost import compute_cost
 
 def gradient_descent(x, y, theta, m, alpha, num_iterations):
 

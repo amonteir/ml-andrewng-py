@@ -4,8 +4,9 @@ Compute cost for linear regression
 %   parameter for linear regression to fit the data points in x and y
 
 """
-def compute_cost(x, y, theta, m):
 
+
+def compute_cost(x, y, theta, m):
     predictions = x.dot(theta)  # mx2 2x1 => mx1
     sqrErrors = (predictions - y) ** 2
 

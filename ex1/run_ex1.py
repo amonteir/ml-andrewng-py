@@ -50,10 +50,9 @@ def run_ex1():
     p1 = Process(target=plot_data, args=(plotting_tasks, tasks_that_are_done, 1))
     processes.append(p1)  # add new process to the processes list
     p1.start()  # start the new process
-    #  input("Press Enter to plot train dataset.")
+    time.sleep(.5)
 
-
-    # =================== Part 3: Cost and Gradient descent ===================
+    #  =================== Part 3: Cost and Gradient descent ===================
     input("Press Enter to continue...")
 
     x.insert(loc=0, column="bias", value=np.ones(m), allow_duplicates=True)  # add bias column to x
@@ -84,7 +83,6 @@ def run_ex1():
     print('Theta found by gradient descent:{} ; {}\n'
           'Expected theta values (approx): -3.6303 ; 1.1664'.format(theta[0], theta[1]))
 
-
     # plot the linear regression fit
     plotting_tasks.put("SCATTER_AND_LINE")
     plotting_tasks.put(x)  # add x to the plotting queue, we don't need the bias column
@@ -94,6 +92,7 @@ def run_ex1():
     p2 = Process(target=plot_data, args=(plotting_tasks, tasks_that_are_done, 2))
     processes.append(p2)  # add new process to the processes list
     p2.start()  # start the new process
+    time.sleep(.5)
 
     # input("Press Enter to plot linear regression fit.")
     input("Press Enter to continue...")
@@ -123,7 +122,6 @@ def run_ex1():
             t = [theta0_values[i], theta1_values[j]]
             J_values[i, j] = compute_cost(x, y, t, m)
 
-
     # plot the Cost Function J surface
     plotting_tasks.put("SURFACE-3D")
     plotting_tasks.put(theta0_values)  # add Theta 0 to the plotting queue
@@ -133,19 +131,9 @@ def run_ex1():
     p3 = Process(target=plot_data, args=(plotting_tasks, tasks_that_are_done, 3))
     processes.append(p3)  # add new process to the processes list
     p3.start()  # start the new process
+    time.sleep(.5)
 
     input("Press Enter to plot the Cost Function J as contour.")
-
-    # plot the Cost Function J surface
-    plotting_tasks.put("SURFACE-3D")
-    plotting_tasks.put(theta0_values)  # add Theta 0 to the plotting queue
-    plotting_tasks.put(theta1_values)  # add Theta 1  to the plotting queue
-    plotting_tasks.put(J_values)  # add J values to the plotting queue
-    # creating new process
-    p4 = Process(target=plot_data, args=(plotting_tasks, tasks_that_are_done, 4))
-    processes.append(p4)  # add new process to the processes list
-    p4.start()  # start the new process
-
 
     # plot the Cost Function J contour
     plotting_tasks.put("CONTOUR")
@@ -158,16 +146,15 @@ def run_ex1():
     p4 = Process(target=plot_data, args=(plotting_tasks, tasks_that_are_done, 4))
     processes.append(p4)  # add new process to the processes list
     p4.start()  # start the new process
-
+    time.sleep(.5)
 
     input("Press Enter to continue.")
 
     # completing process, in practice it'll not do much because
     # current processes are blocked in plt.show()
-    for p in range(len(processes)):
-        plotting_tasks.put("END")
-        time.sleep(2)
-
+    #  for p in range(len(processes)):
+    #    plotting_tasks.put("END")
+    #    time.sleep(2)
 
     for p in processes:
         p.join()
