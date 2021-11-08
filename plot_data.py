@@ -71,15 +71,22 @@ def plot_data(tasks_to_accomplish, tasks_that_are_done, figure_num):
                 theta1 = tasks_to_accomplish.get_nowait()  # theta1
                 x_mesh, y_mesh = np.meshgrid(x, y)
 
-                fig, ax = plt.subplots(1, 1)
-                # fig = plt.figure(figure_num)
 
-                cp = ax.contourf(x_mesh, y_mesh, z, locator=ticker.LogLocator())
-                plt.plot(theta0, theta1, 'x', color="r")
-
-                plt.title("Cost Function, J")
+                fig = plt.figure(figure_num)
+                plt.title("Cost Function, J, Contour")
                 plt.xlabel("Theta0")
                 plt.ylabel("Theta1")
+                plt.contour(x_mesh, y_mesh, z, 20, cmap='RdGy')
+
+                # plt.plot(theta0, theta1, 'x', color="r")
+                """
+                contours = plt.contour(x_mesh, y_mesh, z, 3, colors='black')
+                plt.clabel(contours, inline=True, fontsize=8)
+
+                plt.imshow(z, extent=[0, 5, 0, 5], origin='lower',
+                           cmap='RdGy', alpha=0.5)
+                plt.colorbar()
+                """
 
                 plt.show()
                 tasks_that_are_done.put("Process {} closed Figure {}".format(current_process().name, figure_num))

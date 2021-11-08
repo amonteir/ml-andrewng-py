@@ -20,8 +20,6 @@
 # x refers to the population size in 10,000s
 # y refers to the profit in $10,000s
 
-import pandas as pd
-import numpy as np
 from ex1.compute_cost import compute_cost
 from ex1.gradient_descent import gradient_descent
 from plot_data import *
@@ -52,7 +50,7 @@ def run_ex1():
     p1 = Process(target=plot_data, args=(plotting_tasks, tasks_that_are_done, 1))
     processes.append(p1)  # add new process to the processes list
     p1.start()  # start the new process
-    input("Press Enter to plot train dataset.")
+    #  input("Press Enter to plot train dataset.")
 
 
     # =================== Part 3: Cost and Gradient descent ===================
@@ -97,7 +95,8 @@ def run_ex1():
     processes.append(p2)  # add new process to the processes list
     p2.start()  # start the new process
 
-    input("Press Enter to plot linear regression fit.")
+    # input("Press Enter to plot linear regression fit.")
+    input("Press Enter to continue...")
 
     # Predict values for population sizes of 35,000 and 70,000
     predict1 = (np.array([1, 3.5])).dot(theta)
@@ -109,7 +108,7 @@ def run_ex1():
 
     #  ============= Part 4: Visualizing J(theta_0, theta_1) =============
 
-    print('Visualizing J(theta_0, theta_1)...')
+    print('Press Enter to plot the Cost Function J as a surface.')
 
     # Grid over which we will calculate J
     theta0_values = np.linspace(-10, 10, num=100)
@@ -135,7 +134,18 @@ def run_ex1():
     processes.append(p3)  # add new process to the processes list
     p3.start()  # start the new process
 
-    input("Press Enter to plot the Cost Function J as a surface.")
+    input("Press Enter to plot the Cost Function J as contour.")
+
+    # plot the Cost Function J surface
+    plotting_tasks.put("SURFACE-3D")
+    plotting_tasks.put(theta0_values)  # add Theta 0 to the plotting queue
+    plotting_tasks.put(theta1_values)  # add Theta 1  to the plotting queue
+    plotting_tasks.put(J_values)  # add J values to the plotting queue
+    # creating new process
+    p4 = Process(target=plot_data, args=(plotting_tasks, tasks_that_are_done, 4))
+    processes.append(p4)  # add new process to the processes list
+    p4.start()  # start the new process
+
 
     # plot the Cost Function J contour
     plotting_tasks.put("CONTOUR")
@@ -149,15 +159,15 @@ def run_ex1():
     processes.append(p4)  # add new process to the processes list
     p4.start()  # start the new process
 
-    input("Press Enter to plot the Cost Function J as contour.")
 
-
+    input("Press Enter to continue.")
 
     # completing process, in practice it'll not do much because
     # current processes are blocked in plt.show()
     for p in range(len(processes)):
         plotting_tasks.put("END")
         time.sleep(2)
+
 
     for p in processes:
         p.join()
