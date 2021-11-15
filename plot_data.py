@@ -1,11 +1,8 @@
-import logging
 import matplotlib.pyplot as plt
-import pandas as pd
-from multiprocessing import Lock, Process, Queue, current_process
+from multiprocessing import current_process
 import queue  # imported for using queue.Empty exception
 import time
 import numpy as np
-from matplotlib import ticker
 
 
 def plot_data(tasks_to_accomplish, tasks_that_are_done, figure_num):
@@ -28,6 +25,19 @@ def plot_data(tasks_to_accomplish, tasks_that_are_done, figure_num):
                 plt.title("Market Size - Training Dataset")
                 plt.xlabel("Population of City in 10,000s")
                 plt.ylabel("Profit in $10,000s")
+                plt.show()
+                tasks_that_are_done.put("Figure {} closed in Process {}".format(figure_num, current_process().name))
+                time.sleep(.5)
+                break
+
+            elif first_task == "LINE":
+                x = tasks_to_accomplish.get_nowait()
+                y = tasks_to_accomplish.get_nowait()
+                plt.figure(figure_num)
+                plt.scatter(x, y)  # plot training dataset
+                plt.title("Convergence Graph")
+                plt.xlabel("Number of iterations")
+                plt.ylabel("Cost J")
                 plt.show()
                 tasks_that_are_done.put("Figure {} closed in Process {}".format(figure_num, current_process().name))
                 time.sleep(.5)

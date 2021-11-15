@@ -23,6 +23,8 @@
 from ex1.compute_cost import compute_cost
 from ex1.gradient_descent import gradient_descent
 from plot_data import *
+from multiprocessing import Process, Queue
+import pandas as pd
 
 
 def run_ex1():

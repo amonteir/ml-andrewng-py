@@ -13,3 +13,9 @@ def compute_cost(x, y, theta, m):
     J = (1 / (2 * m)) * sum(sqrErrors)
 
     return J
+
+
+def compute_cost_multi(x, y, theta, m):
+    J = (1 / (2 * m)) * (x.dot(theta) - y).T.dot(x.dot(theta) - y)
+
+    return J[0]
